@@ -9,15 +9,14 @@ namespace Day1
     {
         static async Task Main(string[] args)
         {
-            var sonarMeassurements = await GetSonarReadings();
+            var sonarMeasurements = await GetSonarReadings();
+            var totalNumberOfMeasurementsLargerThanPreviousMeasurement = CompareMeasurements(sonarMeasurements);
 
-            var totalNumberOfMeassurementsLargerThanPreviousMeassurement = CompareMeassurements(sonarMeassurements);
+            var slidingMeassurements = GetSlidingMeasurements(sonarMeasurements);
+            var totalNumberOfSlidingMeasurementsLargerThanThePreviousSlidingMeasurement = CompareMeasurements(slidingMeassurements);
 
-            Console.WriteLine($"{totalNumberOfMeassurementsLargerThanPreviousMeassurement} meassurements were larger than the preceeding meassurement.");
-
-            var totalNumberOfSlidingMeassurementsLargerThanThePreviousSlidingMeassurement = ProcessMeassurementsForSlidingWindow(sonarMeassurements);
-
-            Console.WriteLine($"{totalNumberOfSlidingMeassurementsLargerThanThePreviousSlidingMeassurement} sliding sums were larger than the preceeding sliding sum.");
+            Console.WriteLine($"{totalNumberOfMeasurementsLargerThanPreviousMeasurement} measurements were larger than the preceeding measurement.");
+            Console.WriteLine($"{totalNumberOfSlidingMeasurementsLargerThanThePreviousSlidingMeasurement} sliding sums were larger than the preceeding sliding sum.");
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
@@ -32,7 +31,7 @@ namespace Day1
             return result;
         }
 
-        private static int CompareMeassurements(int[] sonarReadings)
+        private static int CompareMeasurements(int[] sonarReadings)
         {
             int depthIncreaseCounter = 0;
 
@@ -50,19 +49,9 @@ namespace Day1
             return depthIncreaseCounter;
         }
 
-        private static int ProcessMeassurementsForSlidingWindow(int[] sonarReadings)
+        private static int[] GetSlidingMeasurements(int[] sonarReadings)
         {
             const int SlidingWindowSize = 3;
-
-            var slidingWindowMeassurements = GetSlidingWindowMeassurements(sonarReadings, SlidingWindowSize);
-
-            var result = CompareMeassurements(slidingWindowMeassurements);
-
-            return result;
-        }
-
-        private static int[] GetSlidingWindowMeassurements(int[] sonarReadings, int SlidingWindowSize)
-        {
             var slidingSets = new List<int>();
             var readings = sonarReadings.ToList();
 
