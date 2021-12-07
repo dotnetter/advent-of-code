@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Day3
@@ -53,6 +52,20 @@ namespace Day3
 
             Console.WriteLine($"The gamme value {gammaValue} multiplied by the epsilon value {epsilonValue} equals {result}");
 
+        }
+
+        static void Part2(string[] data)
+        {
+            var blah = data.Select(s => s.ToCharArray().ToArray()).ToArray();
+
+            var oxygenRating = GetOxygenRating(blah, 0)[0];
+            var o2Rating = GetCO2ScrubberRating(blah, 0)[0];
+
+            var oxygenFinal = Convert.ToInt32(string.Join("", oxygenRating), 2);
+            var o2Final = Convert.ToInt32(string.Join("", o2Rating), 2);
+            var lifeSupport = oxygenFinal * o2Final;
+
+            Console.WriteLine($"The Oxygen rating {oxygenFinal} multiplied by the O2 Scurbber rating {o2Final} equals a Life Support rating of {lifeSupport}");
         }
 
         private static char[][] GetOxygenRating(char[][] blah, int pos)
@@ -111,20 +124,6 @@ namespace Day3
             {
                 return GetCO2ScrubberRating(zeros, nextPos);
             }
-        }
-
-        static void Part2(string[] data)
-        {
-            var blah = data.Select(s => s.ToCharArray().ToArray()).ToArray();
-
-            var oxygenRating = GetOxygenRating(blah, 0)[0];
-            var o2Rating = GetCO2ScrubberRating(blah, 0)[0];
-
-            var oxygenFinal = Convert.ToInt32(string.Join("", oxygenRating), 2);
-            var o2Final = Convert.ToInt32(string.Join("", o2Rating), 2);
-            var lifeSupport = oxygenFinal * o2Final;
-
-            Console.WriteLine($"The Oxygen rating {oxygenFinal} multiplied by the O2 Scurbber rating {o2Final} equals a Life Support rating of {lifeSupport}");
         }
 
         static string[] GetData()
